@@ -8,5 +8,5 @@ data class Item(
     @PrimaryKey
     var id: Int,
     val name: String,
-    val price: Int,
+    val price: Double,
     val quantity: Int)

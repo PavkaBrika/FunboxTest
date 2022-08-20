@@ -5,7 +5,7 @@ import com.breckneck.funboxtest.domain.repository.ItemRepository
 
 class GetAllItemsUseCase(val itemRepository: ItemRepository) {
 
-    fun execute() : List<ItemDomain> {
+    suspend fun execute() : List<ItemDomain> {
         return itemRepository.getAllItems()
     }
 }

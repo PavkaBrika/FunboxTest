@@ -4,7 +4,9 @@ import com.breckneck.funboxtest.domain.model.ItemDomain
 
 interface ItemRepository {
 
-    fun addItem(itemDomain: ItemDomain)
+    suspend fun addItem(itemDomain: ItemDomain)
 
-    fun getAllItems() : List<ItemDomain>
+    suspend fun getAllItems() : List<ItemDomain>
+
+    suspend fun wasOpened() : Boolean
 }

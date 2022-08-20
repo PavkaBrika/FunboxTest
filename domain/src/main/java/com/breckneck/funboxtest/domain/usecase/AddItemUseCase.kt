@@ -5,8 +5,8 @@ import com.breckneck.funboxtest.domain.repository.ItemRepository
 
 class AddItemUseCase(val itemRepository: ItemRepository) {
 
-    fun execute(name: String, price: Int, quantity: Int) {
-        itemRepository.addItem(ItemDomain(name = name, price = price, quantity = quantity))
+    suspend fun execute(name: String, price: Double, quantity: Int) {
+        itemRepository.addItem(ItemDomain(id = 0, name = name, price = price, quantity = quantity))
     }
 
 }

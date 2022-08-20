@@ -7,15 +7,15 @@ import com.breckneck.funboxtest.data.entity.Item
 interface AppDao {
 
     @Query("SELECT * FROM item")
-    fun getAllItem() : List<Item>
+    suspend fun getAllItem() : List<Item>
 
     @Insert
-    fun insertItem(item: Item)
+    suspend fun insertItem(item: Item)
 
     @Delete
-    fun deleteItem(item: Item)
+    suspend fun deleteItem(item: Item)
 
     @Update
-    fun updateItem(item: Item)
+    suspend fun updateItem(item: Item)
 
 }
