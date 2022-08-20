@@ -26,5 +26,13 @@ class ItemDataBaseStorageImpl(context: Context) : ItemDataBaseStorage {
         return db.appDao().getAllItem()
     }
 
+    override suspend fun getItemById(id: Int): Item {
+        return db.appDao().getItemById(id = id)
+    }
+
+    override suspend fun updateItem(item: Item) {
+        db.appDao().updateItem(item = item)
+    }
+
 
 }

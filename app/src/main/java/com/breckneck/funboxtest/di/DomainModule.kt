@@ -1,8 +1,6 @@
 package com.breckneck.funboxtest.di
 
-import com.breckneck.funboxtest.domain.usecase.AddItemUseCase
-import com.breckneck.funboxtest.domain.usecase.CheckWasOpenedUseCase
-import com.breckneck.funboxtest.domain.usecase.GetAllItemsUseCase
+import com.breckneck.funboxtest.domain.usecase.*
 import org.koin.dsl.module
 
 val domainModule = module {
@@ -17,5 +15,13 @@ val domainModule = module {
 
     factory<CheckWasOpenedUseCase> {
         CheckWasOpenedUseCase(itemRepository = get())
+    }
+
+    factory<GetItemByIdUseCase> {
+        GetItemByIdUseCase(itemRepository = get())
+    }
+
+    factory<UpdateItemUseCase> {
+        UpdateItemUseCase(itemRepository = get())
     }
 }

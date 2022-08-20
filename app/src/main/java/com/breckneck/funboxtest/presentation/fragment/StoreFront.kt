@@ -1,6 +1,7 @@
 package com.breckneck.funboxtest.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,6 @@ class StoreFront : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_store_front, container, false)
         val viewPager : ViewPager2 = view.findViewById(R.id.viewPager)
 
@@ -35,6 +35,7 @@ class StoreFront : Fragment() {
 
         fragmentScope().lifecycleOwner.lifecycleScope.launch {
             if (!wasOpened.execute()) {
+                Log.e("TAG", "Test data uploaded")
                 addItem.execute(name = "Apple iPod touch 5 32Gb", price = 8888.0, quantity = 5)
                 addItem.execute(name = "Samsung Galaxy S Duos S7562", price = 7230.0, quantity = 2)
                 addItem.execute(name = "Canon EOS 600D Kit", price = 15659.0, quantity = 4)
@@ -46,6 +47,7 @@ class StoreFront : Fragment() {
                 addItem.execute(name = "Sony Xperia acro S", price = 11800.99, quantity = 1)
                 addItem.execute(name = "Lenovo G580", price = 8922.0, quantity = 1)
             }
+            Log.e("TAG", "Store Front adapter")
             val adapter = ViewPagerAdapter(getAllItems.execute())
             viewPager.adapter = adapter
         }

@@ -23,4 +23,13 @@ class ItemRepositoryImpl(val itemDataBaseStorage: ItemDataBaseStorage, val itemS
     override suspend fun wasOpened(): Boolean {
         return itemSharedPrefsStorage.wasOpened()
     }
+
+    override suspend fun getItemById(id: Int): ItemDomain {
+        val item = itemDataBaseStorage.getItemById(id = id)
+        return ItemDomain(id = item.id, name = item.name, price = item.price, quantity = item.quantity)
+    }
+
+    override suspend fun updateItem(itemDomain: ItemDomain) {
+        itemDataBaseStorage.updateItem(Item(id = itemDomain.id, name = itemDomain.name, price = itemDomain.price, quantity = itemDomain.quantity))
+    }
 }

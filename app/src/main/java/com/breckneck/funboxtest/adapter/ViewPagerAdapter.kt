@@ -10,10 +10,10 @@ import com.breckneck.funboxtest.domain.model.ItemDomain
 import java.text.DecimalFormat
 
 class ViewPagerAdapter(
-    val items: List<ItemDomain>
+    private val items: List<ItemDomain>
 ) : RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
 
-    val decimalFormat = DecimalFormat("#.##")
+    private val decimalFormat = DecimalFormat("#.##")
 
     inner class ViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name : TextView = itemView.findViewById(R.id.itemNameTextView)

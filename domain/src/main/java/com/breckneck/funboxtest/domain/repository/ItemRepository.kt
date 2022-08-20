@@ -9,4 +9,8 @@ interface ItemRepository {
     suspend fun getAllItems() : List<ItemDomain>
 
     suspend fun wasOpened() : Boolean
+
+    suspend fun getItemById(id: Int) : ItemDomain
+
+    suspend fun updateItem(itemDomain: ItemDomain)
 }

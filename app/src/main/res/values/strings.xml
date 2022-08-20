@@ -10,4 +10,8 @@
     <string name="name">Название</string>
     <string name="rub">руб.</string>
     <string name="quant">шт.</string>
+    <string name="toastError">Что-то введено неверно!</string>
+    <string name="toastUpdate">Информация обновлена!</string>
+    <string name="toastSave">Информация сохранена!</string>
+
 </resources>

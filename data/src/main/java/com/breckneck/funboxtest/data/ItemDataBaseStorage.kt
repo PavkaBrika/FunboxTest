@@ -8,4 +8,7 @@ interface ItemDataBaseStorage {
 
     suspend fun getAllItems() : List<Item>
 
+    suspend fun getItemById(id: Int) : Item
+
+    suspend fun updateItem(item: Item)
 }

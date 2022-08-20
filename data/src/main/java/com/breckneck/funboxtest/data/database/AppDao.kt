@@ -6,6 +6,9 @@ import com.breckneck.funboxtest.data.entity.Item
 @Dao
 interface AppDao {
 
+    @Query("SELECT * FROM item WHERE id = :id")
+    suspend fun getItemById(id: Int) : Item
+
     @Query("SELECT * FROM item")
     suspend fun getAllItem() : List<Item>
 
