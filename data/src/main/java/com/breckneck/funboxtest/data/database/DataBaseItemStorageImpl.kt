@@ -22,5 +22,9 @@ class DataBaseItemStorageImpl(context: Context) : ItemStorage {
         sharedPreferences.edit().putInt(ITEM_ID, itemId).apply()
     }
 
+    override fun getAllItems(): List<Item> {
+        return db.appDao().getAllItem()
+    }
+
 
 }

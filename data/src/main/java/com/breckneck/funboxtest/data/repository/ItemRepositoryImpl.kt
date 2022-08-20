@@ -12,4 +12,10 @@ class ItemRepositoryImpl(val itemStorage: ItemStorage) : ItemRepository {
         itemStorage.addItem(Item(id = 0, name = itemDomain.name, price = itemDomain.price, quantity = itemDomain.quantity))
     }
 
+    override fun getAllItems(): List<ItemDomain> {
+        val items = itemStorage.getAllItems()
+        return items.map {
+            ItemDomain(id = it.id, name = it.name, price = it.price, quantity = it.quantity)
+        }
+    }
 }

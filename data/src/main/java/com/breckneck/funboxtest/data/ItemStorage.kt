@@ -6,4 +6,6 @@ interface ItemStorage {
 
     fun addItem(item: Item)
 
+    fun getAllItems() : List<Item>
+
 }
