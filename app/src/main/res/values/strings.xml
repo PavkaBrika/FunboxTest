@@ -2,4 +2,7 @@
     <string name="app_name">FunboxTest</string>
     <string name="storefront">Store-Front</string>
     <string name="backend">Back-End</string>
+    <string name="buy">Купить</string>
+    <string name="price">Цена</string>
+    <string name="quantity">Количество</string>
 </resources>
