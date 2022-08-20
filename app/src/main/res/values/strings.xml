@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FunboxTest</string>
+    <string name="storefront">Store-Front</string>
+    <string name="backend">Back-End</string>
 </resources>
