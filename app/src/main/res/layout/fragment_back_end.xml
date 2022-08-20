@@ -5,10 +5,34 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.BackEnd">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="back" />
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/backend_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@android:color/darker_gray">
+
+            <ImageButton
+                android:id="@+id/addButton"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_alignParentEnd="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_add_24" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/backend_action_bar" />
+
+    </RelativeLayout>
+
 
 </FrameLayout>
