@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.breckneck.funboxtest.data.ItemDataBaseStorage
 import com.breckneck.funboxtest.data.entity.Item
+import com.google.gson.GsonBuilder
 
 private val SHARED_PREFS_NAME = "shared_prefs_name"
 private val ITEM_ID = "itemid"
@@ -36,5 +37,11 @@ class ItemDataBaseStorageImpl(context: Context) : ItemDataBaseStorage {
 
     override suspend fun deleteItem(item: Item) {
         db.appDao().deleteItem(item = item)
+    }
+
+    override suspend fun getJsonString(items: List<Item>): String {
+        val gsonBuilder = GsonBuilder()
+        val gson = gsonBuilder.create()
+        return gson.toJson(items)
     }
 }

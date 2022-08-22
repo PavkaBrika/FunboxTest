@@ -61,12 +61,11 @@ class StoreFront : Fragment() {
             }
         }
 
-        Log.e("TAG", "Store Front adapter")
         vm.getAllItems()
-
         vm.resultItemList.observe(viewLifecycleOwner) { items ->
             val adapter = ViewPagerAdapter(items, buyButtonClickListener)
             viewPager.adapter = adapter
+            Log.e("TAG", "Store Front adapter")
         }
 
         return view

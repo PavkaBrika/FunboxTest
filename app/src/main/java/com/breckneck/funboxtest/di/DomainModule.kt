@@ -32,4 +32,8 @@ val domainModule = module {
     factory<BuyItemUseCase> {
         BuyItemUseCase(itemRepository = get())
     }
+
+    factory<GetJsonStringUseCase> {
+        GetJsonStringUseCase(itemRepository = get())
+    }
 }

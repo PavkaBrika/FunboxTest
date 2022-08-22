@@ -15,4 +15,6 @@ interface ItemRepository {
     suspend fun updateItem(itemDomain: ItemDomain)
 
     suspend fun deleteItem(itemDomain: ItemDomain)
+
+    suspend fun getJsonString(items: List<ItemDomain>) : String
 }

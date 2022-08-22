@@ -17,6 +17,15 @@
             android:layout_height="75dp"
             android:background="@android:color/darker_gray">
 
+            <Button
+                android:id="@+id/jsonButton"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/json"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"/>
+
             <ImageButton
                 android:id="@+id/addButton"
                 android:layout_width="75dp"
@@ -32,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/backend_action_bar"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </RelativeLayout>
 

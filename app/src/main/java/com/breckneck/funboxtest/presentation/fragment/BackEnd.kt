@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,6 +18,7 @@ import com.breckneck.funboxtest.adapter.RecyclerViewAdapter
 import com.breckneck.funboxtest.adapter.ViewPagerAdapter
 import com.breckneck.funboxtest.domain.model.ItemDomain
 import com.breckneck.funboxtest.domain.usecase.GetAllItemsUseCase
+import com.breckneck.funboxtest.domain.usecase.GetJsonStringUseCase
 import com.breckneck.funboxtest.presentation.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -23,6 +26,8 @@ import org.koin.androidx.scope.fragmentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BackEnd : Fragment() {
+
+    private val getJsonString: GetJsonStringUseCase by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +57,13 @@ class BackEnd : Fragment() {
         vm.resultItemList.observe(viewLifecycleOwner) { items ->
             val adapter = RecyclerViewAdapter(items, itemClickListener)
             recyclerView.adapter = adapter
+            val jsonButton: Button = view.findViewById(R.id.jsonButton)
+            jsonButton.setOnClickListener {
+                fragmentScope().lifecycleOwner.lifecycleScope.launch {
+                    Log.e("TAG", getJsonString.execute(items = items))
+                    Toast.makeText(requireContext(), "Json объект выведен в логи", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         return view

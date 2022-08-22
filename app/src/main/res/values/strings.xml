@@ -15,5 +15,7 @@
     <string name="toastSave">Информация сохранена!</string>
     <string name="toastDelete">Информация удалена!</string>
     <string name="toastBuy">Покупка прошла успешно!</string>
+    <string name="json">JSON</string>
+    <string name="jsonToast">Json объект выведен в логи</string>
 
 </resources>

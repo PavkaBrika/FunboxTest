@@ -6,11 +6,21 @@ import com.breckneck.funboxtest.data.entity.Item
 import com.breckneck.funboxtest.domain.model.ItemDomain
 import com.breckneck.funboxtest.domain.repository.ItemRepository
 
-class ItemRepositoryImpl(val itemDataBaseStorage: ItemDataBaseStorage, val itemSharedPrefsStorage: ItemSharedPrefsStorage) : ItemRepository {
+class ItemRepositoryImpl(
+    val itemDataBaseStorage: ItemDataBaseStorage,
+    val itemSharedPrefsStorage: ItemSharedPrefsStorage
+) : ItemRepository {
 
 
     override suspend fun addItem(itemDomain: ItemDomain) {
-        itemDataBaseStorage.addItem(Item(id = 0, name = itemDomain.name, price = itemDomain.price, quantity = itemDomain.quantity))
+        itemDataBaseStorage.addItem(
+            Item(
+                id = 0,
+                name = itemDomain.name,
+                price = itemDomain.price,
+                quantity = itemDomain.quantity
+            )
+        )
     }
 
     override suspend fun getAllItems(): List<ItemDomain> {
@@ -26,14 +36,44 @@ class ItemRepositoryImpl(val itemDataBaseStorage: ItemDataBaseStorage, val itemS
 
     override suspend fun getItemById(id: Int): ItemDomain {
         val item = itemDataBaseStorage.getItemById(id = id)
-        return ItemDomain(id = item.id, name = item.name, price = item.price, quantity = item.quantity)
+        return ItemDomain(
+            id = item.id,
+            name = item.name,
+            price = item.price,
+            quantity = item.quantity
+        )
     }
 
     override suspend fun updateItem(itemDomain: ItemDomain) {
-        itemDataBaseStorage.updateItem(Item(id = itemDomain.id, name = itemDomain.name, price = itemDomain.price, quantity = itemDomain.quantity))
+        itemDataBaseStorage.updateItem(
+            Item(
+                id = itemDomain.id,
+                name = itemDomain.name,
+                price = itemDomain.price,
+                quantity = itemDomain.quantity
+            )
+        )
     }
 
     override suspend fun deleteItem(itemDomain: ItemDomain) {
-        itemDataBaseStorage.deleteItem(Item(id = itemDomain.id, name = itemDomain.name, price = itemDomain.price, quantity = itemDomain.quantity))
+        itemDataBaseStorage.deleteItem(
+            Item(
+                id = itemDomain.id,
+                name = itemDomain.name,
+                price = itemDomain.price,
+                quantity = itemDomain.quantity
+            )
+        )
+    }
+
+    override suspend fun getJsonString(items: List<ItemDomain>): String {
+        return itemDataBaseStorage.getJsonString(items.map {
+            Item(
+                id = it.id,
+                name = it.name,
+                price = it.price,
+                quantity = it.quantity
+            )
+        })
     }
 }
