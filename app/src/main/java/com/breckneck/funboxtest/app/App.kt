@@ -1,6 +1,7 @@
 package com.breckneck.funboxtest.app
 
 import android.app.Application
+import com.breckneck.funboxtest.di.appModule
 import com.breckneck.funboxtest.di.dataModule
 import com.breckneck.funboxtest.di.domainModule
 import org.koin.android.ext.koin.androidContext
@@ -16,7 +17,7 @@ class App : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@App)
-            modules(listOf(domainModule, dataModule))
+            modules(listOf(domainModule, dataModule, appModule))
         }
     }
 }

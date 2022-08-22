@@ -6,21 +6,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.breckneck.funboxtest.R
 import com.breckneck.funboxtest.adapter.ViewPagerAdapter
+import com.breckneck.funboxtest.domain.model.ItemDomain
 import com.breckneck.funboxtest.domain.usecase.AddItemUseCase
 import com.breckneck.funboxtest.domain.usecase.CheckWasOpenedUseCase
 import com.breckneck.funboxtest.domain.usecase.GetAllItemsUseCase
+import com.breckneck.funboxtest.domain.usecase.UpdateItemUseCase
+import com.breckneck.funboxtest.presentation.activity.MainActivity
+import com.breckneck.funboxtest.presentation.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.fragmentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class StoreFront : Fragment() {
 
-    private val getAllItems: GetAllItemsUseCase by inject()
     private val addItem: AddItemUseCase by inject()
     private val wasOpened: CheckWasOpenedUseCase by inject()
 
@@ -31,7 +36,14 @@ class StoreFront : Fragment() {
         val view = inflater.inflate(R.layout.fragment_store_front, container, false)
         val viewPager : ViewPager2 = view.findViewById(R.id.viewPager)
 
+        val vm by requireActivity().viewModel<MainViewModel>()
 
+        val buyButtonClickListener = object: ViewPagerAdapter.OnBuyButtonClickListener {
+            override fun onBuyButtonClick(item: ItemDomain) {
+                vm.buyItem(ItemDomain(id = item.id, name = item.name, price = item.price, quantity = item.quantity))
+                Toast.makeText(view.context, resources.getString(R.string.toastBuy), Toast.LENGTH_SHORT).show()
+            }
+        }
 
         fragmentScope().lifecycleOwner.lifecycleScope.launch {
             if (!wasOpened.execute()) {
@@ -47,11 +59,15 @@ class StoreFront : Fragment() {
                 addItem.execute(name = "Sony Xperia acro S", price = 11800.99, quantity = 1)
                 addItem.execute(name = "Lenovo G580", price = 8922.0, quantity = 1)
             }
-            Log.e("TAG", "Store Front adapter")
-            val adapter = ViewPagerAdapter(getAllItems.execute())
-            viewPager.adapter = adapter
         }
 
+        Log.e("TAG", "Store Front adapter")
+        vm.getAllItems()
+
+        vm.resultItemList.observe(viewLifecycleOwner) { items ->
+            val adapter = ViewPagerAdapter(items, buyButtonClickListener)
+            viewPager.adapter = adapter
+        }
 
         return view
     }

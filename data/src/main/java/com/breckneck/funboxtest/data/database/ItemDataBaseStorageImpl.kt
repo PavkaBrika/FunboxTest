@@ -34,5 +34,7 @@ class ItemDataBaseStorageImpl(context: Context) : ItemDataBaseStorage {
         db.appDao().updateItem(item = item)
     }
 
-
+    override suspend fun deleteItem(item: Item) {
+        db.appDao().deleteItem(item = item)
+    }
 }

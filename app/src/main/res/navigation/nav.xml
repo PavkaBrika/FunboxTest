@@ -26,7 +26,8 @@
         tools:layout="@layout/fragment_add_item" >
         <action
             android:id="@+id/action_addItem_to_backEnd"
-            app:destination="@id/backEnd" />
+            app:destination="@id/backEnd"
+            app:popUpTo="@id/storeFront" />
         <argument
             android:name="itemId"
             app:argType="integer"

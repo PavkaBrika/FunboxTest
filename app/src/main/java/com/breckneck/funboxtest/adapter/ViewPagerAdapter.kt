@@ -3,6 +3,7 @@ package com.breckneck.funboxtest.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.breckneck.funboxtest.R
@@ -10,7 +11,8 @@ import com.breckneck.funboxtest.domain.model.ItemDomain
 import java.text.DecimalFormat
 
 class ViewPagerAdapter(
-    private val items: List<ItemDomain>
+    private val items: List<ItemDomain>,
+    private val buyButtonClickListener: OnBuyButtonClickListener
 ) : RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
 
     private val decimalFormat = DecimalFormat("#.##")
@@ -21,6 +23,11 @@ class ViewPagerAdapter(
         val quantity: TextView = itemView.findViewById(R.id.itemQuantityTextView)
         val currencyString = itemView.resources.getString(R.string.rub)
         val quantityString = itemView.resources.getString(R.string.quant)
+        val buyButton: Button = itemView.findViewById(R.id.buyItemButton)
+    }
+
+    interface OnBuyButtonClickListener {
+        fun onBuyButtonClick(item: ItemDomain)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
@@ -33,6 +40,9 @@ class ViewPagerAdapter(
         holder.name.text = item.name
         holder.price.text = "${decimalFormat.format(item.price)} ${holder.currencyString}"
         holder.quantity.text = "${item.quantity.toString()} ${holder.quantityString}"
+        holder.buyButton.setOnClickListener {
+            buyButtonClickListener.onBuyButtonClick(item = item)
+        }
     }
 
     override fun getItemCount(): Int {

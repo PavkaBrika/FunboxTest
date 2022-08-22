@@ -6,9 +6,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.breckneck.funboxtest.R
+import com.breckneck.funboxtest.presentation.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

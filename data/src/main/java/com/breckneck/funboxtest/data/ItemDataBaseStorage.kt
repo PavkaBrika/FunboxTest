@@ -11,4 +11,6 @@ interface ItemDataBaseStorage {
     suspend fun getItemById(id: Int) : Item
 
     suspend fun updateItem(item: Item)
+
+    suspend fun deleteItem(item: Item)
 }

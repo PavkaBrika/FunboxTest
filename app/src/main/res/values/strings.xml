@@ -13,5 +13,7 @@
     <string name="toastError">Что-то введено неверно!</string>
     <string name="toastUpdate">Информация обновлена!</string>
     <string name="toastSave">Информация сохранена!</string>
+    <string name="toastDelete">Информация удалена!</string>
+    <string name="toastBuy">Покупка прошла успешно!</string>
 
 </resources>

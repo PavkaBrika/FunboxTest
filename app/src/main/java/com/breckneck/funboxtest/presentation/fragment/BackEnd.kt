@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.breckneck.funboxtest.R
 import com.breckneck.funboxtest.adapter.RecyclerViewAdapter
+import com.breckneck.funboxtest.adapter.ViewPagerAdapter
 import com.breckneck.funboxtest.domain.model.ItemDomain
 import com.breckneck.funboxtest.domain.usecase.GetAllItemsUseCase
+import com.breckneck.funboxtest.presentation.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.fragmentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BackEnd : Fragment() {
-
-    private val getAllItems: GetAllItemsUseCase by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,12 +30,15 @@ class BackEnd : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_back_end, container, false)
 
+        val vm by requireActivity().viewModel<MainViewModel>()
+
         val recyclerView : RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
 
         val addButton: ImageButton = view.findViewById(R.id.addButton)
         addButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_backEnd_to_addItem)
+            val action = BackEndDirections.actionBackEndToAddItem(itemId = -1)
+            Navigation.findNavController(view).navigate(action)
         }
 
         val itemClickListener = object: RecyclerViewAdapter.OnItemClickListener {
@@ -44,14 +48,11 @@ class BackEnd : Fragment() {
             }
         }
 
-        fragmentScope().lifecycleOwner.lifecycleScope.launch {
-            Log.e("TAG", "Back End Adapter")
-            val items = getAllItems.execute()
+        vm.getAllItems()
+        vm.resultItemList.observe(viewLifecycleOwner) { items ->
             val adapter = RecyclerViewAdapter(items, itemClickListener)
             recyclerView.adapter = adapter
         }
-
-
 
         return view
     }

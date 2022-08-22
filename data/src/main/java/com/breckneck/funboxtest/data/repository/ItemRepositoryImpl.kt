@@ -32,4 +32,8 @@ class ItemRepositoryImpl(val itemDataBaseStorage: ItemDataBaseStorage, val itemS
     override suspend fun updateItem(itemDomain: ItemDomain) {
         itemDataBaseStorage.updateItem(Item(id = itemDomain.id, name = itemDomain.name, price = itemDomain.price, quantity = itemDomain.quantity))
     }
+
+    override suspend fun deleteItem(itemDomain: ItemDomain) {
+        itemDataBaseStorage.deleteItem(Item(id = itemDomain.id, name = itemDomain.name, price = itemDomain.price, quantity = itemDomain.quantity))
+    }
 }

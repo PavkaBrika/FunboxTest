@@ -16,16 +16,16 @@ import com.breckneck.funboxtest.domain.model.ItemDomain
 import com.breckneck.funboxtest.domain.usecase.AddItemUseCase
 import com.breckneck.funboxtest.domain.usecase.GetItemByIdUseCase
 import com.breckneck.funboxtest.domain.usecase.UpdateItemUseCase
+import com.breckneck.funboxtest.presentation.viewmodel.MainViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.fragmentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddItem : Fragment() {
 
     private val args: AddItemArgs by navArgs()
-    private val getItemById: GetItemByIdUseCase by inject()
-    private val updateItem: UpdateItemUseCase by inject()
-    private val addItem: AddItemUseCase by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,19 +33,23 @@ class AddItem : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add_item, container, false)
 
+        val vm by requireActivity().viewModel<MainViewModel>()
+
         val itemNameEditText: EditText = view.findViewById(R.id.itemNameEditText)
         val itemPriceEditText: EditText = view.findViewById(R.id.itemPriceEditText)
         val itemQuantityEditText: EditText = view.findViewById(R.id.itemQuantityEditText)
 
-//        var item = ItemDomain(id = 0, name = "", price = 0.0, quantity = 0)
         lateinit var item: ItemDomain
         val itemId = args.itemId
         fragmentScope().lifecycleOwner.lifecycleScope.launch {
             if (itemId != -1) {
-                item = getItemById.execute(id = itemId)
-                itemNameEditText.setText(item.name)
-                itemPriceEditText.setText(item.price.toString())
-                itemQuantityEditText.setText(item.quantity.toString())
+                vm.getItemById(id = itemId)
+                vm.resultItem.observe(viewLifecycleOwner) {
+                    item = it
+                    itemNameEditText.setText(item.name)
+                    itemPriceEditText.setText(item.price.toString())
+                    itemQuantityEditText.setText(item.quantity.toString())
+                }
             }
         }
 
@@ -54,11 +58,10 @@ class AddItem : Fragment() {
             if (itemId != -1) {
                 if ((itemQuantityEditText.text.toString().trim().isNotEmpty()) && (itemPriceEditText.text.toString().trim().isNotEmpty()) && (itemNameEditText.text.toString().trim().isNotEmpty())) {
                     if ((itemPriceEditText.text.toString().toDouble() > 0) && (itemQuantityEditText.text.toString().toInt() > 0)) {
-                        fragmentScope().lifecycleOwner.lifecycleScope.launch {
-                            updateItem.execute(itemDomain = ItemDomain(id = item.id, name = itemNameEditText.text.toString().trim(), price = itemPriceEditText.text.toString().toDouble(), quantity = itemQuantityEditText.text.toString().toInt()))
-                        }
+                        vm.updateItem(item = ItemDomain(id = item.id, name = itemNameEditText.text.toString().trim(), price = itemPriceEditText.text.toString().toDouble(), quantity = itemQuantityEditText.text.toString().toInt()))
                         Toast.makeText(view.context, resources.getString(R.string.toastUpdate), Toast.LENGTH_SHORT).show()
                         Navigation.findNavController(view).navigate(R.id.action_addItem_to_backEnd)
+
                     } else {
                         Toast.makeText(view.context, resources.getString(R.string.toastError), Toast.LENGTH_SHORT).show()
                     }
@@ -68,9 +71,7 @@ class AddItem : Fragment() {
             } else {
                 if ((itemQuantityEditText.text.toString().trim().isNotEmpty()) && (itemPriceEditText.text.toString().trim().isNotEmpty()) && (itemNameEditText.text.toString().trim().isNotEmpty())) {
                     if ((itemPriceEditText.text.toString().toDouble() > 0) && (itemQuantityEditText.text.toString().toInt() > 0)) {
-                        fragmentScope().lifecycleOwner.lifecycleScope.launch {
-                            addItem.execute(name = itemNameEditText.text.toString().trim(), price = itemPriceEditText.text.toString().toDouble(), quantity = itemQuantityEditText.text.toString().toInt())
-                        }
+                        vm.addItem(name = itemNameEditText.text.toString().trim(), price = itemPriceEditText.text.toString().toDouble(), quantity = itemQuantityEditText.text.toString().toInt())
                         Toast.makeText(view.context, resources.getString(R.string.toastSave), Toast.LENGTH_SHORT).show()
                         Navigation.findNavController(view).navigate(R.id.action_addItem_to_backEnd)
                     } else {

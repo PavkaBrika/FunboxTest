@@ -13,4 +13,6 @@ interface ItemRepository {
     suspend fun getItemById(id: Int) : ItemDomain
 
     suspend fun updateItem(itemDomain: ItemDomain)
+
+    suspend fun deleteItem(itemDomain: ItemDomain)
 }

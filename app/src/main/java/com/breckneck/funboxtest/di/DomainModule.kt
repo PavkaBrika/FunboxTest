@@ -24,4 +24,12 @@ val domainModule = module {
     factory<UpdateItemUseCase> {
         UpdateItemUseCase(itemRepository = get())
     }
+
+    factory<DeleteItemUseCase> {
+        DeleteItemUseCase(itemRepository = get())
+    }
+
+    factory<BuyItemUseCase> {
+        BuyItemUseCase(itemRepository = get())
+    }
 }
